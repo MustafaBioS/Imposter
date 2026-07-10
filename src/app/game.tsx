@@ -1,28 +1,51 @@
 import { useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { themes } from "./data/themes";
 
 export default function Game() {
     const { theme, players } = useLocalSearchParams<{ theme: string; players: string }>();
     const [playerList] = useState(JSON.parse(players));
+    const [index, setIndex] = useState(0);
 
     const words = themes[theme as keyof typeof themes];
 
-    const secretWord = words[Math.floor(Math.random() * words.length)];
+    const assignments = useMemo(() => {
 
-    const imposter = Math.floor(Math.random() * playerList.length);
+        const secretWord = words[Math.floor(Math.random() * words.length)];
+        const imposter = Math.floor(Math.random() * playerList.length);
 
-    const assignments = playerList.map((player, index) => ({
-        ...player,
-        role: index === imposter ? "Imposter" : "Player",
-        word: index === imposter ? "Imposter" : secretWord,
+        return playerList.map((player, index) => ({
+           ...player,
+           role: index === imposter ? "Imposter" : "Player",
+           word: index === imposter ? "Imposter" : secretWord,
         }));
+    }, [playerList, words]);
+
+
 
     return (
         <View className="px-10">
             <Text className="text-center text-4xl font-extrabold pb-8 pt-8">Theme: {theme}</Text>
-            <Text className="text-center text-2xl">{assignments[0]?.name}</Text>
+            <Text className="text-center text-2xl">{assignments[index]?.name}</Text>
+
+            // Make Card That Flips On Hold Tomorrow That Shows The Role.
+
+            <Pressable
+                onPress={() => {
+                    if (index < assignments.length - 1) {
+                        setIndex(index + 1);
+                    } else {
+//                         router.push({
+//                             pathname: "/reveal",
+//                             params: { assignments: JSON.stringify(assignments) },
+//                         });
+                        setIndex(0);
+                    }
+                }}
+            >
+                <Text>Continue</Text>
+            </Pressable>
         </View>
     );
 }
