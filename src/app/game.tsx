@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { View, Text, Pressable } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { themes } from "./data/themes";
@@ -11,7 +11,6 @@ export default function Game() {
     const words = themes[theme as keyof typeof themes];
 
     const assignments = useMemo(() => {
-
         const secretWord = words[Math.floor(Math.random() * words.length)];
         const imposter = Math.floor(Math.random() * playerList.length);
 
@@ -28,9 +27,9 @@ export default function Game() {
         <View className="px-10">
             <Text className="text-center text-4xl font-extrabold pb-8 pt-8">Theme: {theme}</Text>
             <Text className="text-center text-2xl">{assignments[index]?.name}</Text>
-
-            // Make Card That Flips On Hold Tomorrow That Shows The Role.
-
+            <View className="h-96 w-64 mx-auto bg-black rounded-lg flex items-center justify-center mt-8 mb-8 active:opacity-60 transition-all duration-300 ease-in-out">
+                <Text className="text-center text-2xl">{assignments[index]?.word}</Text>
+            </View>
             <Pressable
                 onPress={() => {
                     if (index < assignments.length - 1) {
@@ -47,5 +46,5 @@ export default function Game() {
                 <Text>Continue</Text>
             </Pressable>
         </View>
-    );
+    )
 }
