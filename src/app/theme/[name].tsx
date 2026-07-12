@@ -85,7 +85,7 @@ export default function Theme() {
                 <Pressable className="h-full flex items-center w-full"
                     onPress={() =>
                         router.push({
-                            pathname: "/game",
+                            pathname: "/cards",
                             params: {
                                 theme: name,
                                 players: JSON.stringify(players),
