@@ -4,6 +4,7 @@ import { useLocalSearchParams, router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
 import { themes } from "../data/themes";
+import { Trash2 } from "lucide-react-native";
 
 export default function Theme() {
     const { name } = useLocalSearchParams<{ name: string }>();
@@ -46,7 +47,7 @@ export default function Theme() {
         setPlayers((prev) => [
             ...prev,
             {
-                id: prev.length + 1,
+                id: Math.max(0, ...prev.map((p) => p.id)) + 1,
                 name: `Player ${prev.length + 1}`,
             },
         ]);
@@ -60,17 +61,36 @@ export default function Theme() {
         );
     };
 
+    const deletePlayer = (id: number) => {
+        setPlayers((prev) =>
+            prev.filter((player) =>
+                player.id !== id
+            )
+        );
+    };
+
     return (
-        <View className="px-10">
+        <ScrollView className="px-10">
             <Text className="text-center text-4xl font-extrabold pb-8 pt-8">Theme: {name}</Text>
 
             {players.map((player) => (
-                <TextInput
-                    key={player.id}
-                    className="h-20 w-full border-2 bg-white text-xl opacity-70 border-black p-4 mb-4 flex items-center justify-center rounded-2xl active:opacity-50 transition-all duration-300"
-                    value={player.name}
-                    onChangeText={(text) => updatePlayer(player.id, text)}
-                />
+                <View key={player.id} className="mb-4">
+                    <TextInput
+                        className="pr-20 h-20 w-full border-2 bg-white text-xl opacity-70 border-black px-4 flex items-center justify-center rounded-2xl active:opacity-50 transition-all duration-300"
+                        value={player.name}
+                        onChangeText={(text) => updatePlayer(player.id, text)}
+                    />
+                    <Pressable
+                        className="absolute right-4 bottom-0 top-0 active:opacity-60 transition-all duration-300 ease-in-out justify-center"
+                        onPress={() => deletePlayer(player.id)}
+                    >
+                        <Trash2
+                            color="red"
+                            size={32}
+                            className=""
+                        />
+                    </Pressable>
+                </View>
             ))}
 
 
@@ -93,9 +113,9 @@ export default function Theme() {
                         })
                     }
                 >
-                    <Text className="text-2xl text-center text-blue-500 font-bold">Start Game</Text>
+                    <Text className="text-2xl text-center text-blue-500 font-bold pb-20">Start Game</Text>
                 </Pressable>
             </View>
-        </View>
+        </ScrollView>
     )
 }
