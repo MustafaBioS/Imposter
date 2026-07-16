@@ -8,6 +8,8 @@ export default function Cards() {
     const [playerList] = useState(JSON.parse(players));
     const router = useRouter();
     const [index, setIndex] = useState(0);
+    const [hidden, setHidden] = useState(true);
+    const [con, setCon] = useState(false);
 
     const words = themes[theme as keyof typeof themes];
 
@@ -31,14 +33,24 @@ export default function Cards() {
             <Text className="text-center text-4xl font-extrabold pb-8 pt-8">Theme: { theme }</Text>
             <Text className="text-center text-2xl">Pass The Phone To:</Text>
             <Text className="text-center text-3xl">{gameData.assignments[index]?.name}</Text>
-            <View className="h-96 w-64 mx-auto bg-black rounded-2xl flex items-center justify-center mt-8 mb-8 active:opacity-60 transition-all duration-300 ease-in-out">
+            <View className={`${hidden ? "hidden" : "flex"} h-96 w-64 mx-auto bg-black rounded-2xl items-center justify-center mt-8 mb-8 active:opacity-60 transition-all duration-300 ease-in-out`}>
                 <Text className="text-center text-2xl">{gameData.assignments[index]?.word}</Text>
             </View>
             <Pressable
                 onPress={() => {
                     if (index < gameData.assignments.length - 1) {
-                        setIndex(index + 1);
-                    } else {
+                        console.log(`INDEX: ${index} | HIDDEN: ${hidden}`);
+                        if (hidden == true) {
+                            setHidden(false);
+                        } else {
+                            setHidden(true);
+                            setIndex(index + 1);
+                        }
+                    } else if (index === gameData.assignments.length - 1 && con == false) {
+                        console.log(`LAST INDEX: ${index}`);
+                        setHidden(false);
+                        setCon(true);
+                    } else if (con == true) {
                         router.push({
                             pathname: "/game",
                             params: { secretWord: gameData.secretWord, theme: theme, players: JSON.stringify(gameData.assignments) },
