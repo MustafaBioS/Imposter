@@ -11,6 +11,7 @@ export default function Theme() {
     const [players, setPlayers] = useState([
         {id: 1, name: "Player 1"},
     ]);
+    const [hidden, setHidden] = useState(true);
 
     useEffect(() => {
         loadPlayers();
@@ -101,20 +102,31 @@ export default function Theme() {
                 <Text className="text-2xl">Add Player +</Text>
             </Pressable>
 
-            <View className="h-full flex w-full">
-                <Pressable className="h-full flex items-center w-full"
-                    onPress={() =>
-                        router.push({
-                            pathname: "/cards",
-                            params: {
-                                theme: name,
-                                players: JSON.stringify(players),
-                            },
-                        })
+            <View className="flex w-full">
+                <Pressable className="flex items-center w-full"
+                    onPress={() => {
+                            if (players.length <= 2) {
+                                console.log("NOT ENOUGH PLAYERS!!");
+                                setHidden(false);
+                            } else {
+                                setHidden(true);
+                                router.push({
+                                    pathname: "/cards",
+                                    params: {
+                                        theme: name,
+                                        players: JSON.stringify(players),
+                                    },
+                                });
+                            };
+                        }
                     }
                 >
-                    <Text className="text-2xl text-center text-blue-500 font-bold pb-20">Start Game</Text>
+                    <Text className="text-2xl text-center text-blue-500 font-bold">Start Game</Text>
                 </Pressable>
+            </View>
+
+            <View className={`h-full justify-end items-end ${hidden ? "hidden" : "flex"}`}>
+                <Text className="text-xl text-yellow-200 text-center p-4 w-full bg-red-500 rounded-2xl">Please Add More Players To Start</Text>
             </View>
         </ScrollView>
     )

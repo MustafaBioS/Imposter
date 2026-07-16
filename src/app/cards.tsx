@@ -29,8 +29,9 @@ export default function Cards() {
     return (
         <View className="px-10">
             <Text className="text-center text-4xl font-extrabold pb-8 pt-8">Theme: { theme }</Text>
-            <Text className="text-center text-2xl">{gameData.assignments[index]?.name}</Text>
-            <View className="h-96 w-64 mx-auto bg-black rounded-lg flex items-center justify-center mt-8 mb-8 active:opacity-60 transition-all duration-300 ease-in-out">
+            <Text className="text-center text-2xl">Pass The Phone To:</Text>
+            <Text className="text-center text-3xl">{gameData.assignments[index]?.name}</Text>
+            <View className="h-96 w-64 mx-auto bg-black rounded-2xl flex items-center justify-center mt-8 mb-8 active:opacity-60 transition-all duration-300 ease-in-out">
                 <Text className="text-center text-2xl">{gameData.assignments[index]?.word}</Text>
             </View>
             <Pressable
