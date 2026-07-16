@@ -32,7 +32,7 @@ export default function Game() {
                                         } else {
                                             router.push({
                                                 pathname: "/votes",
-                                                params: {}
+                                                params: { theme: theme, players: JSON.stringify(playersList), secretWord: secretWord },
                                             });
                                         }
                                     }
