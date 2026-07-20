@@ -22,16 +22,9 @@ export default function Index() {
             className="w-full h-20 border-2 bg-white border-black mb-4 flex-row items-center justify-center rounded-2xl active:opacity-70 transition-all duration-300"
             onPress={() => handleThemePress(item)}
         >
-            <View style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "space-evenly",
-                      width: "100%",
-                      gap: 20,
-                }}
-            >
-                <Text>{item}</Text>
-                {Icon && <Icon size={32} color="orange" />}
+            <View className="px-10 flex flex-row gap-2 w-full items-center justify-evenly">
+                <Text className="flex-1 text-center text-xl">{item}</Text>
+                {Icon && <Icon size={30} color="black" />}
             </View>
         </Pressable>
     )
@@ -39,7 +32,7 @@ export default function Index() {
 
   return (
     <SafeAreaView className="flex-1">
-        <ScrollView className="px-20 pb-8 mt-4">
+        <View className="px-20 pb-8 mt-4">
             <Text className="mb-8 text-center text-4xl text-red-600 font-extrabold pt-8">Imposter</Text>
             <FlatList
               data={themeKeys}
@@ -48,7 +41,7 @@ export default function Index() {
               scrollEnabled={false}
               removeClippedSubviews={true}
             />
-        </ScrollView>
+        </View>
     </SafeAreaView>
   );
 }

@@ -21,10 +21,10 @@ export const themes = {
         items: ["Dog", "Cat", "Elephant", "Lion", "Dolphin"],
         icon: PawPrint,
     },
-    "Movies & TV Shows": {
-        items: ["Inception", "Friends", "The Godfather", "Breaking Bad", "The Avengers"],
-        icon: Clapperboard,
-    },
+//     "Movies & TV Shows": {
+//         items: ["Inception", "Friends", "The Godfather", "Breaking Bad", "The Avengers"],
+//         icon: Clapperboard,
+//     },
     Sports: {
         items: ["Soccer", "Basketball", "Tennis", "Baseball", "Swimming"],
         icon: Volleyball,
